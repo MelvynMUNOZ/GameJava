@@ -28,6 +28,10 @@ public class Controller {
 	@FXML
 	private void init() {
 		//initialise la map, le jeur et les compteurs
+		TileMaps.initMap();
+		var player = new Player(10, 478);
+		pane.getChildren().addAll(TileMaps.titleMap);
+		pane.getChildren().add(player);
 	}
 	
 	@FXML
