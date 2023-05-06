@@ -18,4 +18,8 @@ public class MapEntity extends ImageView {
 		});
 	}
 	
+	public EMapType getType() {
+	    return type;
+	}
+	
 }

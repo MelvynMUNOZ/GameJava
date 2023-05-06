@@ -81,12 +81,12 @@ public class TileMaps {
 	"--------------------------------",
 	"--------------------------------",
 	"--------------------------------",
-	"----------000000----------------",
+	"000000000000000000000000--------",
 	"--------------------------------",
 	"--------------------------------",
 	};
 
-	protected static List<MapEntity> titleMap = new ArrayList<>();
+	protected static List<MapEntity> tileMap = new ArrayList<>();
 	
 //	public static void initMap() {
 //		for (var i=0; i<39; i++) {  // de base c'est 47 mais j'ai enlever 8 lignes donc ça passe à 39
@@ -95,7 +95,7 @@ public class TileMaps {
 //					case '0' -> SOL;
 //					default -> EMPTY;
 //				};
-//				titleMap.add(new MapEntity((j+1)*TILE_SIZE, (i+4)*TILE_SIZE, type)); // le (i+8) iest pour laisser les boutons en haut de l'écran
+//				tileMap.add(new MapEntity((j+1)*TILE_SIZE, (i+4)*TILE_SIZE, type)); // le (i+8) iest pour laisser les boutons en haut de l'écran
 //			}
 //		}
 //	}
@@ -103,12 +103,15 @@ public class TileMaps {
 	//pour la version image de 32 bits
 	public static void initMap() {
 		for (var i=0; i<20; i++) {  // de base c'est 24 mais j'ai enlever 8 lignes donc ça passe à 20
-			for (var j = 0; j<31; j++) {
+			for (var j = 0; j<32; j++) {
 				var type = switch(map[i].charAt(j)) {
 					case '0' -> SOL;
 					default -> EMPTY;
 				};
-				titleMap.add(new MapEntity((j+1)*TILE_SIZE, (i+2)*TILE_SIZE, type)); // le (i+2) iest pour laisser les boutons en haut de l'écran
+				if (type != EMPTY) {
+					tileMap.add(new MapEntity((j)*TILE_SIZE, (i+2)*TILE_SIZE, type)); // le (i+2) iest pour laisser les boutons en haut de l'écran
+				}
+
 			}
 		}
 	}
