@@ -11,6 +11,7 @@ import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -30,7 +31,7 @@ public class Controller {
 	@FXML
 	private Pane pane;
 	@FXML
-	private Text score;
+	private Text counter;
 	
 	@FXML
 	private Text level;
@@ -77,6 +78,7 @@ public class Controller {
 					if (apples[i] != null && apples[i].getBoundsInParent().intersects(player.getBoundsInParent())) {
 						pane.getChildren().remove(apples[i]);
 						apples[i] = null;
+						counter.setText(String.valueOf(Integer.valueOf(counter.getText())+1));
 					}
 				}
 			}
