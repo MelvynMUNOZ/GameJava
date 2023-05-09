@@ -28,6 +28,8 @@ public class Controller {
 	
 	private ImageView[] apples;
 	
+	private Enemy enemy;
+	
 	@FXML
 	private Pane pane;
 	@FXML
@@ -57,11 +59,13 @@ public class Controller {
 	private void init() {
 		//initialise la map, le joueur et les compteurs
 		TileMaps.initMap();
-		player = new Player(10, 478);
-		game = new Game(player,tileMap);
+		player = new Player(50, 500);
+		enemy = new Enemy(400,574); // a replacer correctement avec la map
+		//TODO : faire que si le perso rencontre le monstre -> game over
+		game = new Game(player,enemy,tileMap);
 		pane.getChildren().addAll(tileMap);
-		System.out.println(player);
 		pane.getChildren().add(player);
+		pane.getChildren().add(enemy);
 		//ajout des pommes
 		apples = new ImageView[5];
 		apples[0] = new Items(10,550);
@@ -129,6 +133,7 @@ public class Controller {
 	}
 	
 	private void handleKeyPressed(KeyEvent e) {
+		enemy.coord();
 		if(e.getCode() == KeyCode.Q) {
 			player.vX = -5;
 		}
@@ -136,7 +141,7 @@ public class Controller {
 			player.vX = 5;
 		}
 		if (e.getCode() == KeyCode.Z && player.canJump()) {
-			player.vY += JUMP;
+			player.vY += P_JUMP;
 		}
 	}
 	

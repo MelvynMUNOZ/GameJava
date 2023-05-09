@@ -15,21 +15,21 @@ public class Player extends ImageView {
 	public Player(double x, double y) {
 		setX(x);
 		setY(y);
-		setImage(PLAYER_IDLE_IMG);
+		setImage(PLAYER_IMG);
 	}
 	
 	
 	// a voir si on met public ou private
-	void moveX() {
+	public void moveX() {
 		setX(getX() + vX);
 	}
 	
-	void moveY() {
+	public void moveY() {
 		vY += GRAVITY;
 		setY(getY() + vY);
 	}
 	
-	boolean canJump() {
+	public boolean canJump() {
 		Predicate<MapEntity> pr = tile -> collide(this,tile);
 		var op = tileMap.stream().filter(pr);
 		setY(getY() + 1); //permet de savoir si un pixel en dessous c'est un obstacle
