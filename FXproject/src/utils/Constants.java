@@ -48,6 +48,10 @@ public class Constants {
 	
 	public static final Image ENEMY_IDLE_IMG = new Image("enemy_idle.png");
 	
+	public static final Image PNJ_IMG = new Image("Pnj.png");
+	
+	public static final Image GAMEOVER = new Image("GAMEOVER.png");
+	
 	
 	
 	public static final Image APPLE_IMG = new Image("apple.png");
@@ -55,6 +59,7 @@ public class Constants {
 	public static final double GRAVITY = 0.5;
 	
 	public static final double P_JUMP = -12;
+	public static final double P_JUMP_OBJ = -15;
 	public static final double P_WIDTH = 18;
 	public static final double P_HEIGHT = 24;
 	

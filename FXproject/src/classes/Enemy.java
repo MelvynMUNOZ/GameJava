@@ -1,53 +1,50 @@
 package classes;
 
-import javafx.beans.property.DoubleProperty;
+
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 import static utils.Constants.*;
 
 public class Enemy extends ImageView{
-	
-	private double vX;
 
-	public Enemy(double x, double y) {
-		setX(x);
-		setY(y);
-		setImage(ENEMY_IDLE_IMG);
-	}
-	
-	// a voir si on met public ou private
-	public void moveX() {
-		setX(getX() + vX);
-	}
-	
-	//fonction temporaire
-	public void coord() {
-		System.out.println(getX());
-		System.out.println(getY());
-	}
-	
-	public static void collisionEnemySide(Player p, Enemy e, double x, double y) {
-		if (p.getY()>= e.getY() && p.getY()<e.getY()+TILE_SIZE) {
-			if(p.vX > 0) {
-				if (e.getX()<= x+TILE_SIZE && e.getX()>= x) {
-					System.out.println("dead");
-				}
-			}else if(p.vX < 0) {
-				if (e.getX()<= x && e.getX()>= x-TILE_SIZE) {
-					System.out.println("dead");
-				}
-			}
-		}
-		if (p.vY != 0) {
-			System.out.println(p.getY()+P_HEIGHT);
-			System.out.println(e.getY());
-			if (p.getY()+P_HEIGHT == e.getY()) {
-				System.out.println("enemy not dead");
-				if (p.getX() >= e.getX() && p.getX() < e.getX()+TILE_SIZE) {
-					System.out.println("enemy dead");
-				}
-			}
-		}
-	}
-	
+    private double vX;
+    
+    private static boolean enemyDead = false;
+
+    public Enemy(double x, double y) {
+        setX(x);
+        setY(y);
+        setImage(ENEMY_IDLE_IMG);
+    }
+
+    // a voir si on met public ou private
+    public void moveX() {
+        setX(getX() + vX);
+    }
+
+    public static void collisionEnemySide(Player p, Enemy e, Pane pane) {
+        if (enemyDead == false) {
+    	if (p.getY()>= e.getY() && p.getY()<e.getY()+P_HEIGHT) {
+            if(p.vX > 0) {
+                if (e.getX()<= p.getX()+P_WIDTH && e.getX()>= p.getX()) {
+                    Game.end(pane);
+                }
+            }else if(p.vX < 0) {
+                if (e.getX()<= p.getX() && e.getX()>= p.getX()-P_WIDTH) {
+                	Game.end(pane);
+                }
+            }
+        }
+        // le + ou - 4 permet d'avoir une petite marge pour la position des Y dans le cas où le personnage tombe à 1 ou 2 pixels de différence par exemple
+        if(p.getY()+P_HEIGHT >= e.getY()-4 && p.getY()+P_HEIGHT <= e.getY()+4) { 
+            // 1ere condition : regarde le bord en bas à droite du personnage ; 2eme condition : regarde le bord en bas à gauche du personnage
+            if ((p.getX()+P_WIDTH >= e.getX() && p.getX()+P_WIDTH <= e.getX()+P_WIDTH) || (p.getX() >= e.getX() && p.getX() <= e.getX()+P_WIDTH)){
+                pane.getChildren().remove(e);
+                enemyDead = true;
+            }
+        }
+    }
+    }
+
 }

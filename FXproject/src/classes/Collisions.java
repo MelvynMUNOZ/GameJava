@@ -7,6 +7,11 @@ import static classes.EMapType.IDLE2;
 import java.util.List;
 import java.util.function.Predicate;
 
+
+
+import javafx.scene.layout.Pane;
+
+
 public class Collisions {
 
 	private Collisions() {
@@ -21,13 +26,13 @@ public class Collisions {
 				p.getY() < e.getY() + TILE_SIZE);
 	}
 	
-	public static void collisionPlatformX(Player p, List<MapEntity> tileMap) {
+	public static void collisionPlatformX(Player p, List<MapEntity> tileMap, Pane pane) {
 		Predicate<MapEntity> pr = tile -> collide(p, tile);
 		var op = tileMap.stream().filter(pr).findFirst();
 		if (op.isPresent()) {
 			var e = op.get();
 			if (e.getType()==IDLE || e.getType() == IDLE2) {
-                System.out.println("1");
+                Game.end(pane);
             }			
 			if(p.vX > 0) {
 				p.setX(e.getX() - P_WIDTH); //dans le cas où l'obstacle est à droite du player
@@ -37,13 +42,13 @@ public class Collisions {
 		}
 	}
 	
-	static void collisionPlatformY(Player p, List<MapEntity> tileMap) {
+	static void collisionPlatformY(Player p, List<MapEntity> tileMap, Pane pane) {
 		Predicate<MapEntity> pr = tile -> collide(p, tile);
 		var op = tileMap.stream().filter(pr).findFirst();
 		if (op.isPresent()) {
 			var e = op.get();
 			if (e.getType()==IDLE || e.getType() == IDLE2) {
-                System.out.println("1");
+                Game.end(pane);
             }
 			if(p.vY > 0) {
 				p.setY(e.getY() - P_HEIGHT); //dans le cas où l'obstacle est à droite du player
