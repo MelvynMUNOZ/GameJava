@@ -13,7 +13,7 @@ public class Constants {
 	//pour tester avec les images de 32 pixels
 	
 	public static final double TILE_SIZE = 24;
-	public static final Image PLAYER_IMG = new Image("frog_idle.png");
+	
 	public static final Image EMPTY_IMG = new Image("empty.png");
 	public static final Image PIQUEH_IMG = new Image("Idle.png");
 	public static final Image PIQUEV_IMG = new Image("Idle2.png");
@@ -46,17 +46,23 @@ public class Constants {
 	public static final Image COTE5_IMG = new Image("Cote5.png");
 	public static final Image COTE6_IMG = new Image("Cote6.png");
 	
+	public static final Image PLAYER_IMG = new Image("frog_idle.png"); // a supp une fois que l'animation fonctionne
+	public static final Image PLAYER_IDLE = new Image("frog_idle_anim.png");
+	
 	public static final Image ENEMY_IDLE_IMG = new Image("enemy_idle.png");
 	
+	public static final Image PNJ_IMG = new Image("Pnj.png");
 	
+	public static final Image GAMEOVER = new Image("GAMEOVER.png");
 	
 	public static final Image APPLE_IMG = new Image("apple.png");
 	
 	public static final double GRAVITY = 0.5;
 	
 	public static final double P_JUMP = -12;
-	public static final double P_WIDTH = 18;
-	public static final double P_HEIGHT = 24;
+	public static final double P_JUMP_OBJ = -15;
+	public static final double P_WIDTH = 24;
+	public static final double P_HEIGHT = 32;
 	
 	public static final double DURATION = 0.5;
 	

@@ -4,6 +4,8 @@ import static utils.Constants.*;
 import static classes.Collisions.collide;
 import static classes.TileMaps.tileMap;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import javafx.scene.image.ImageView;
 
@@ -11,6 +13,7 @@ public class Player extends ImageView {
 	
 	double vX;
 	double vY;
+	List<String> inventaire = new ArrayList<String>();
 
 	public Player(double x, double y) {
 		setX(x);
