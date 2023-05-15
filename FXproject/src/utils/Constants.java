@@ -57,6 +57,10 @@ public class Constants {
 	
 	public static final Image APPLE_IMG = new Image("apple.png");
 	
+	public static final Image FLAGB_IMG = new Image("FlagB.png");
+
+	public static final Image FLAGT_IMG = new Image("FlagT.png");
+	
 	public static final double GRAVITY = 0.5;
 	
 	public static final double P_JUMP = -12;

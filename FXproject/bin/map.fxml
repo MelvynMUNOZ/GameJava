@@ -80,7 +80,7 @@
                   </VBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Pane id="inventaire1" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: white;">
+                        <Pane fx:id="inventaire1" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: white;">
                            <HBox.margin>
                               <Insets left="110.0" />
                            </HBox.margin>

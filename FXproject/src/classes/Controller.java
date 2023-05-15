@@ -1,15 +1,18 @@
 package classes;
 
 import static classes.TileMaps.tileMap;
+import classes.Flag;
 import static classes.Game.*;
 import static utils.Constants.*;
 import static classes.AnimationSprites.*;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -24,6 +27,9 @@ public class Controller {
 	
 	private Pnj pnj;
 	
+	private Flag flagB;
+	private Flag flagT;
+	
 	private static int obj;
 	
 	@FXML
@@ -33,9 +39,7 @@ public class Controller {
 	@FXML
 	private Pane inventaire1;
 	
-	public Controller(){
-		
-	}
+	public Controller(){}
 	
 	public static void setObj(int val) {
 		obj = val;
@@ -48,12 +52,16 @@ public class Controller {
 		player = new Player(50, 500);
 		pnj = new Pnj(527,567);
 		enemy = new Enemy(800,568); // a replacer correctement avec la map
+		flagB = new Flag(900 ,240 ,FLAGB_IMG);
+		flagT = new Flag(900 ,216 ,FLAGT_IMG);
 		//TODO : faire que si le perso rencontre le monstre -> game over
-		game = new Game(player,enemy,tileMap,pane);
+		game = new Game(player,enemy,tileMap,pane,counter,flagB);
 		pane.getChildren().addAll(tileMap);
 		pane.getChildren().add(player);
 		pane.getChildren().add(enemy);
 		pane.getChildren().add(pnj);
+		pane.getChildren().add(flagB);
+		pane.getChildren().add(flagT);
 		//ajout des pommes
 		apples = new ImageView[9];
 		apples[0] = new Items(73,211);
@@ -108,7 +116,8 @@ public class Controller {
 	@FXML
 	private void help() {
 		//affichage pop up pour les commandes et le but du jeu
-		
+		BorderPane touches;
+		//Scene scene = new Scene(touches);
 	}
 	
 	private void handleKeyPressed(KeyEvent e) {

@@ -12,6 +12,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class Game extends AnimationTimer {
 
@@ -19,12 +20,16 @@ public class Game extends AnimationTimer {
 	final Enemy enemy;
 	final List<MapEntity> tileMap;
 	final Pane pane;
+	final Text counter;
+	final Flag flag;
 	
-	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane) {
+	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag) {
 		this.player = player;
 		this.enemy = enemy;
 		this.tileMap = tileMap;
 		this.pane = pane;
+		this.counter = counter;
+		this.flag = flag;
 	}
 
 	@Override
@@ -38,6 +43,7 @@ public class Game extends AnimationTimer {
 		Collisions.collisionPlatformY(player,tileMap,pane);
 		player.moveX();
 		Collisions.collisionPlatformX(player,tileMap,pane);
+		Collisions.flagCollision(player, flag, pane, counter);
 		
 	}
 	

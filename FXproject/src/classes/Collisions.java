@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 
 
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 
 public class Collisions {
@@ -76,6 +77,16 @@ public class Collisions {
 				p.setY(e.getY() + TILE_SIZE); //dans le cas où l'obstacle est à gauche du player
 			}
 			p.vY = 0; //on repasse la vitesse Y à 0 sinon la vitesse va augmenter trop vite dans la boucle de jeu
+		}
+	}
+	
+	static void flagCollision(Player p, Flag flag, Pane pane, Text counter) {
+		if ((Math.abs(p.getX()-flag.getX()) <= 20 ) && (Math.abs(p.getY()-flag.getY()) <= 20 )) {
+			if (counter.getText().equals("9")) {
+				Game.victory(pane);
+			}else {
+				System.out.println("Va chercher les autres pommes");
+			}
 		}
 	}
 	

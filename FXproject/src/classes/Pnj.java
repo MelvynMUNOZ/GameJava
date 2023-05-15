@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -79,6 +80,11 @@ public class Pnj extends ImageView{
 					
 					message.setText("Prends cette plume\npour sauter plus\nhaut !");
 					inventaire.add("Plume");
+					
+					Image image = new Image("Plume.png");
+					ImageView imageView = new ImageView(image);
+					
+					inventaire1.getChildren().add(imageView);
 				}
 
 		        // Ajout de la forme et du texte au panneau
