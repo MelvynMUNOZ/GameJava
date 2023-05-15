@@ -1,7 +1,9 @@
 package classes;
 
 import static classes.TileMaps.tileMap;
+import static classes.Game.*;
 import static utils.Constants.*;
+import static classes.AnimationSprites.*;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -27,7 +29,7 @@ public class Controller {
 	@FXML
 	public Pane pane;
 	@FXML
-	private Text counter;
+	public Text counter;
 	@FXML
 	private Pane inventaire1;
 	
@@ -73,6 +75,13 @@ public class Controller {
 						pane.getChildren().remove(apples[i]);
 						apples[i] = null;
 						counter.setText(String.valueOf(Integer.valueOf(counter.getText())+1));
+						System.out.println(counter);
+						System.out.println(counter.getText());
+						if(Integer.valueOf(counter.getText()) == 1) {
+							//Game.victory(pane); //a appeler à un autre endroit
+						}
+						AnimationSprites animation_test = new AnimationSprites(32, 32, 200, 200);
+						animation_test.animatedPlayer(player);
 					}
 				}
 			}
@@ -99,6 +108,7 @@ public class Controller {
 	@FXML
 	private void help() {
 		//affichage pop up pour les commandes et le but du jeu
+		
 	}
 	
 	private void handleKeyPressed(KeyEvent e) {

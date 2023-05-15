@@ -35,6 +35,7 @@ public class AnimationSprites {
 
 			    // Mise à jour des coordonnées pour l'extraction de l'image suivante
 			    spriteStartX += spriteWidth;
+			    System.out.println(sprites[i]);
 			}
 			return sprites;
 		}

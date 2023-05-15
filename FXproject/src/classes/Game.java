@@ -2,6 +2,7 @@ package classes;
 
 import classes.Collisions.*;
 import classes.Enemy;
+import classes.Controller;
 
 import static utils.Constants.TILE_SIZE;
 
@@ -37,7 +38,7 @@ public class Game extends AnimationTimer {
 		Collisions.collisionPlatformY(player,tileMap,pane);
 		player.moveX();
 		Collisions.collisionPlatformX(player,tileMap,pane);
-//		Enemy.collisionEnemy(player, enemy, pane);
+		
 	}
 	
 	public static void end(Pane pane) {
@@ -54,6 +55,20 @@ public class Game extends AnimationTimer {
         pane.getChildren().add(imageView);
 	}
 	
+	public static void victory(Pane pane) {
+		pane.getChildren().clear();
+		Image image = new Image("VICTORY.png");
+		ImageView imageView = new ImageView(image);
+		
+		// Positionnement de l'ImageView au centre de la pane
+        imageView.setLayoutX((pane.getWidth() - imageView.getBoundsInLocal().getWidth()) / 2);
+        imageView.setLayoutY((pane.getHeight() - imageView.getBoundsInLocal().getHeight()) / 2);
+        
+        imageView.setPreserveRatio(true);
+        
+        pane.getChildren().add(imageView);
+		
+	}
 	
 	
 }
