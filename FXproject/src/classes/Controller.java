@@ -4,7 +4,6 @@ import static classes.TileMaps.tileMap;
 import classes.Flag;
 import static classes.Game.*;
 import static utils.Constants.*;
-import static classes.AnimationSprites.*;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -37,6 +36,8 @@ public class Controller {
 	private Flag flagT;
 	
 	private static int obj;
+	
+	private static int inventaire_indice = 0;
 	
 	private Stage stage_keys = new Stage();
 	
@@ -100,13 +101,6 @@ public class Controller {
 						pane.getChildren().remove(apples[i]);
 						apples[i] = null;
 						counter.setText(String.valueOf(Integer.valueOf(counter.getText())+1));
-						System.out.println(counter);
-						System.out.println(counter.getText());
-						if(Integer.valueOf(counter.getText()) == 1) {
-							//Game.victory(pane); //a appeler à un autre endroit
-						}
-						AnimationSprites animation_test = new AnimationSprites(32, 32, 200, 200);
-						animation_test.animatedPlayer(player);
 					}
 				}
 			}
@@ -118,8 +112,6 @@ public class Controller {
 		pane.setOnKeyPressed(this::handleKeyPressed);
 		pane.setOnKeyReleased(this::handleKeyReleased);
 		
-	
-		
 	}
 	
 	@FXML
@@ -129,6 +121,7 @@ public class Controller {
 		game.start();
 		enemy.automaticMove(enemy,tileMap,pane);
 		goal();
+		player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3);
 	}
 	
 	@FXML
@@ -171,9 +164,9 @@ public class Controller {
 			player.vX = 4;
 		}
 		if (e.getCode() == KeyCode.Z && player.canJump()) {
-			if (player.inventaire.contains("Plume")) { //On regarde si dans l'inventaire, l'objet Plume est présent
+			if (player.checkInventaireSelected(1, inventaire1, inventaire2, inventaire3, player.inventaire)) {
 				player.vY += P_JUMP_OBJ;
-			}else if(player.inventaire.contains("Trampoline")){
+			}else if(player.checkInventaireSelected(2, inventaire1, inventaire2, inventaire3, player.inventaire)){
 				player.vY += P_JUMP_RESSORT;
 				inventaire2.getChildren().clear();
 				player.inventaire.remove("Trampoline");
@@ -183,6 +176,19 @@ public class Controller {
 		}
 		if (e.getCode() == KeyCode.E) {
 			Pnj.proximitePnj(player, pnj, obj, pane, player.inventaire, inventaire1, Integer.valueOf(counter.getText()), inventaire2);
+		}
+		if (e.getCode() == KeyCode.RIGHT) {
+			inventaire_indice++;
+			inventaire_indice = inventaire_indice%3;
+			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3);
+		}
+		if (e.getCode() == KeyCode.LEFT) {
+			inventaire_indice--;
+			inventaire_indice = inventaire_indice%3;
+			if (inventaire_indice<0){
+				inventaire_indice = inventaire_indice+3;
+			}
+			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3);
 		}
 	}
 	
