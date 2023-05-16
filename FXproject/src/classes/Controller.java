@@ -42,10 +42,18 @@ public class Controller {
 	
 	@FXML
 	public Pane pane;
+	
 	@FXML
 	public Text counter;
+	
 	@FXML
 	private Pane inventaire1;
+	
+	@FXML
+	private Pane inventaire2;
+	
+	@FXML
+	private Pane inventaire3;
 	
 	public Controller(){}
 	
@@ -167,13 +175,14 @@ public class Controller {
 				player.vY += P_JUMP_OBJ;
 			}else if(player.inventaire.contains("Trampoline")){
 				player.vY += P_JUMP_RESSORT;
+				inventaire2.getChildren().clear();
 				player.inventaire.remove("Trampoline");
 			}else {
 				player.vY += P_JUMP;
 			}
 		}
 		if (e.getCode() == KeyCode.E) {
-			Pnj.proximitePnj(player, pnj, obj, pane, player.inventaire, inventaire1, Integer.valueOf(counter.getText()));
+			Pnj.proximitePnj(player, pnj, obj, pane, player.inventaire, inventaire1, Integer.valueOf(counter.getText()), inventaire2);
 		}
 	}
 	

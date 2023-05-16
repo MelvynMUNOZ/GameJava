@@ -30,7 +30,7 @@ public class Pnj extends ImageView{
 		setImage(PNJ_IMG);
 	}
 	
-	public static void proximitePnj(Player p, Pnj pn, int obj, Pane pane, List<String> inventaire, Pane inventaire1, int counter_apple) {
+	public static void proximitePnj(Player p, Pnj pn, int obj, Pane pane, List<String> inventaire, Pane inventaire1, int counter_apple, Pane inventaire2) {
 		if (inventaire.isEmpty()) {
 			if ((Math.abs(p.getX()-pn.getX()) <= 40 ) && (Math.abs(p.getY()-pn.getY()) <= 40 )) { //pour etre dans la zone proche du pnj
 				if (counter_apple<4) {
@@ -56,6 +56,12 @@ public class Pnj extends ImageView{
 		        	
 					message.setText("Prend ce ressort.\nSort de ce trou et va prendre\ntoutes les pommes avant\nde revenir me voir.");
 					inventaire.add("Trampoline");
+					
+					
+					Image image = new Image("Trampoline.png");
+                    ImageView imageView = new ImageView(image);
+
+                    inventaire2.getChildren().add(imageView);
 					
 				}else {
 					// Création du rectangle
