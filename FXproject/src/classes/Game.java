@@ -1,11 +1,5 @@
 package classes;
 
-import classes.Collisions.*;
-import classes.Enemy;
-import classes.Controller;
-
-import static utils.Constants.TILE_SIZE;
-
 import java.util.List;
 
 import javafx.animation.AnimationTimer;
@@ -19,32 +13,43 @@ public class Game extends AnimationTimer {
 	final Player player;
 	final Enemy enemy;
 	final List<MapEntity> tileMap;
+	final List<MapEntity> tileMapPotion;
 	final Pane pane;
 	final Text counter;
 	final Flag flag;
 	
-	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag) {
+	private static boolean potion;
+	
+	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag, List<MapEntity> tileMapPotion) {
 		this.player = player;
 		this.enemy = enemy;
 		this.tileMap = tileMap;
 		this.pane = pane;
 		this.counter = counter;
 		this.flag = flag;
+		this.tileMapPotion = tileMapPotion;
 	}
 
 	@Override
 	public void handle(long time) { //verifie en boucle
-		Enemy.collisionEnemy(player,enemy,pane); //a placer a un endroit où ça va etre tout le temps verifier
+		Enemy.collisionEnemy(player,enemy,pane); 
 		getInputs();
 	}
 	
 	void getInputs() {
-		player.moveY();
-		Collisions.collisionPlatformY(player,tileMap,pane);
-		player.moveX();
-		Collisions.collisionPlatformX(player,tileMap,pane);
-		Collisions.flagCollision(player, flag, pane, counter);
-		
+		if (potion == true) {
+			player.moveY();
+			Collisions.collisionPlatformY(player,tileMapPotion,pane);
+			player.moveX();
+			Collisions.collisionPlatformX(player,tileMapPotion,pane);
+			Collisions.flagCollision(player, flag, pane, counter);
+		}else {
+			player.moveY();
+			Collisions.collisionPlatformY(player,tileMap,pane);
+			player.moveX();
+			Collisions.collisionPlatformX(player,tileMap,pane);
+			Collisions.flagCollision(player, flag, pane, counter);
+		}
 	}
 	
 	public static void end(Pane pane) {
@@ -74,6 +79,14 @@ public class Game extends AnimationTimer {
         
         pane.getChildren().add(imageView);
 		
+	}
+	
+	public static void setPotion () {
+		if (potion == true) {
+			potion = false;
+		}else {
+			potion = true;
+		}
 	}
 	
 	

@@ -3,7 +3,8 @@ package classes;
 import static utils.Constants.*;
 import static classes.EMapType.IDLE;
 import static classes.EMapType.IDLE2;
-import static classes.Enemy.*;
+import static classes.EMapType.GOLD;
+
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -71,6 +72,9 @@ public class Collisions {
 			if (e.getType()==IDLE || e.getType() == IDLE2) {
                 Game.end(pane);
             }
+			if (e.getType() == GOLD) {
+				Game.setPotion();
+			}
 			if(p.vY > 0) {
 				p.setY(e.getY() - P_HEIGHT); //dans le cas où l'obstacle est à droite du player
 			}else if(p.vY < 0) {

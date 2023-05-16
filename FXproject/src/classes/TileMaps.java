@@ -28,7 +28,7 @@ public class TileMaps {
 	   "-k346---45633---deeeef----tdeeef----tdl-",
 	   "-k--------------deeeef----tdeeef----tdl-",
 	   "-k--------------df--df----tdeeef3---tdl-",
-	   "-k--------------df-3df----tdeeef----tdl-",
+	   "-k--------------df-3df----tdeeefu---tdl-",
 	   "ns------22222222debbef----tdeeef----tdl-",
 	   "k1111111abbbbbbceeeeef---abeeeef----tdl-",
 	   "k1111111deeeeeeeee3eabbbbbbbce3eabbbcel-",
@@ -36,6 +36,8 @@ public class TileMaps {
 	   "---------------------ommmmmq------------",};
 		
 		protected static List<MapEntity> tileMap = new ArrayList<>();
+		
+		protected static List<MapEntity> tileMapPotion = new ArrayList<>();
 		
 		private TileMaps() {}
 		
@@ -63,6 +65,7 @@ public class TileMaps {
 						case 'r' -> COTE6;
 						case 's' -> COTE1;
 						case 't' -> IDLE2;
+						case 'u' -> GOLD;
 						case '1' -> BRIQUE;
 						case '2' -> IDLE;
 						case '3' -> PLATFORME;
@@ -77,6 +80,10 @@ public class TileMaps {
 					};if (type != EMPTY) {
 				          tileMap.add(new MapEntity(j * TILE_SIZE, (i+3) * TILE_SIZE, type));
 			        }
+					if (type == BRIQUE || type == SOLG || type == SOLM || type == SOLD || type == PLATFORME || type == PLATFORMEG || type == PLATFORMEM || type == PLATFORMED || type == PLATFORMEHG || type == PLATFORMEHD || type == PLATFORMEBG || type == PLATFORMEBD || type == GOLD
+							|| type == COTEVD || type == COTEVG || type == COTEB || type == COTE1 || type == COTE2 || type == COTE3 || type == COTE4 || type == COTE5 || type == COTE6 || type == BOISG || type == BOISD || type == BOISH || type == BOISV || type == IDLE || type == IDLE2) {
+						tileMapPotion.add(new MapEntity(j * TILE_SIZE, (i+3) * TILE_SIZE, type));
+					}
 				}
 			}
 		}

@@ -43,6 +43,7 @@ public class MapEntity extends ImageView {
 			case COTE4 -> COTE4_IMG;
 			case COTE5 -> COTE5_IMG;
 			case COTE6 -> COTE6_IMG;
+			case GOLD -> GOLD_IMG;
 			default -> EMPTY_IMG;
 		});
 	}

@@ -1,5 +1,6 @@
 package classes;
 
+import static classes.TileMaps.tileMapPotion;
 import static classes.TileMaps.tileMap;
 import classes.Flag;
 import static classes.Game.*;
@@ -71,7 +72,7 @@ public class Controller {
 		flagB = new Flag(900 ,240 ,FLAGB_IMG);
 		flagT = new Flag(900 ,216 ,FLAGT_IMG);
 		
-		game = new Game(player,enemy,tileMap,pane,counter,flagB);
+		game = new Game(player,enemy,tileMap,pane,counter,flagB, tileMapPotion);
 		pane.getChildren().addAll(tileMap);
 		pane.getChildren().add(player);
 		pane.getChildren().add(enemy);

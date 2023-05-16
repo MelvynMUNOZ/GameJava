@@ -45,6 +45,7 @@ public class Constants {
 	public static final Image COTE4_IMG = new Image("Cote4.png");
 	public static final Image COTE5_IMG = new Image("Cote5.png");
 	public static final Image COTE6_IMG = new Image("Cote6.png");
+	public static final Image GOLD_IMG = new Image("Gold.png");
 	
 	public static final Image PLAYER_IMG = new Image("frog_idle.png"); // a supp une fois que l'animation fonctionne
 	public static final Image PLAYER_IDLE = new Image("frog_idle_anim.png");
