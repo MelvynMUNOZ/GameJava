@@ -56,6 +56,9 @@ public class Controller {
 	@FXML
 	private Pane inventaire3;
 	
+	@FXML
+	private Pane inventaire4;
+	
 	public Controller(){}
 	
 	public static void setObj(int val) {
@@ -121,7 +124,7 @@ public class Controller {
 		game.start();
 		enemy.automaticMove(enemy,tileMap,pane);
 		goal();
-		player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3);
+		player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 	}
 	
 	@FXML
@@ -134,20 +137,22 @@ public class Controller {
             VBox keys = new VBox();
             Scene scene_keys = new Scene(keys);
             scene_keys.getStylesheets().add(getClass().getResource("/jeu.css").toExternalForm());
-            stage_keys.setWidth(300);
-            stage_keys.setHeight(200);
+            stage_keys.setWidth(520);
+            stage_keys.setHeight(250);
             stage_keys.setScene(scene_keys);
             stage_keys.setTitle("Help game keys");
 
-            Label[] labels = new Label[5];
+            Label[] labels = new Label[7];
             labels[0] = new Label("Voici les touches pour jouer à ce jeu :");
             labels[1] = new Label("Q => déplacement vers la gauche");
             labels[2] = new Label("D => déplacement vers la droite");
             labels[3] = new Label("Z => saut");
             labels[4] = new Label("E => intéraction avec le PNJ");
+            labels[5] = new Label("Flèche de gauche <  => décale la sélection de l'objet de l'inventaire à la case de gauche");
+            labels[6] = new Label("Flèche de droite >  => décale la sélection de l'objet de l'inventaire à la case de droite");
 
             keys.setId("title");
-            for (int i = 0; i<5; i++) {
+            for (int i = 0; i<7; i++) {
                 labels[i].getStyleClass().add("keys");
             }
             keys.getChildren().addAll(labels);
@@ -164,9 +169,9 @@ public class Controller {
 			player.vX = 4;
 		}
 		if (e.getCode() == KeyCode.Z && player.canJump()) {
-			if (player.checkInventaireSelected(1, inventaire1, inventaire2, inventaire3, player.inventaire)) {
+			if (player.checkInventaireSelected(1, inventaire1, inventaire2, inventaire3, inventaire4, player.inventaire)) {
 				player.vY += P_JUMP_OBJ;
-			}else if(player.checkInventaireSelected(2, inventaire1, inventaire2, inventaire3, player.inventaire)){
+			}else if(player.checkInventaireSelected(2, inventaire1, inventaire2, inventaire3, inventaire4, player.inventaire)){
 				player.vY += P_JUMP_RESSORT;
 				inventaire2.getChildren().clear();
 				player.inventaire.remove("Trampoline");
@@ -179,16 +184,16 @@ public class Controller {
 		}
 		if (e.getCode() == KeyCode.RIGHT) {
 			inventaire_indice++;
-			inventaire_indice = inventaire_indice%3;
-			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3);
+			inventaire_indice = inventaire_indice%4;
+			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 		}
 		if (e.getCode() == KeyCode.LEFT) {
 			inventaire_indice--;
-			inventaire_indice = inventaire_indice%3;
+			inventaire_indice = inventaire_indice%4;
 			if (inventaire_indice<0){
-				inventaire_indice = inventaire_indice+3;
+				inventaire_indice = inventaire_indice+4;
 			}
-			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3);
+			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 		}
 	}
 	
