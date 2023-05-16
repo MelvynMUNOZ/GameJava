@@ -64,7 +64,8 @@ public class Constants {
 	public static final double GRAVITY = 0.5;
 	
 	public static final double P_JUMP = -12;
-	public static final double P_JUMP_OBJ = -15;
+	public static final double P_JUMP_OBJ = -13;
+	public static final double P_JUMP_RESSORT = -14;
 	public static final double P_WIDTH = 24;
 	public static final double P_HEIGHT = 32;
 	

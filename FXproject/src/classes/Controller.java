@@ -7,14 +7,20 @@ import static utils.Constants.*;
 import static classes.AnimationSprites.*;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Controller {
 	
@@ -31,6 +37,8 @@ public class Controller {
 	private Flag flagT;
 	
 	private static int obj;
+	
+	private Stage stage_keys = new Stage();
 	
 	@FXML
 	public Pane pane;
@@ -54,7 +62,7 @@ public class Controller {
 		enemy = new Enemy(800,568); // a replacer correctement avec la map
 		flagB = new Flag(900 ,240 ,FLAGB_IMG);
 		flagT = new Flag(900 ,216 ,FLAGT_IMG);
-		//TODO : faire que si le perso rencontre le monstre -> game over
+		
 		game = new Game(player,enemy,tileMap,pane,counter,flagB);
 		pane.getChildren().addAll(tileMap);
 		pane.getChildren().add(player);
@@ -63,7 +71,7 @@ public class Controller {
 		pane.getChildren().add(flagB);
 		pane.getChildren().add(flagT);
 		//ajout des pommes
-		apples = new ImageView[9];
+		apples = new ImageView[10];
 		apples[0] = new Items(73,211);
 		apples[1] = new Items(85,430);
 		apples[2] = new Items(140,550);
@@ -73,6 +81,7 @@ public class Controller {
 		apples[6] = new Items(495,405);
 		apples[7] = new Items(675,140);
 		apples[8] = new Items(745,260);
+		apples[9] = new Items(810,568);
 		pane.getChildren().addAll(apples);
 		// On démare un AnimationTimer pour verifier la collision avec les items apres chaque frame
 		AnimationTimer timer = new AnimationTimer() {
@@ -111,27 +120,53 @@ public class Controller {
 		pane.requestFocus();
 		game.start();
 		enemy.automaticMove(enemy,tileMap,pane);
+		goal();
 	}
 	
 	@FXML
-	private void help() {
-		//affichage pop up pour les commandes et le but du jeu
-		BorderPane touches;
-		//Scene scene = new Scene(touches);
-	}
+    private void help() {
+        if(stage_keys != null && stage_keys.isShowing()) {
+            stage_keys.close();
+        }
+        else {
+            //affichage pop up pour les commandes
+            VBox keys = new VBox();
+            Scene scene_keys = new Scene(keys);
+            scene_keys.getStylesheets().add(getClass().getResource("/jeu.css").toExternalForm());
+            stage_keys.setWidth(300);
+            stage_keys.setHeight(200);
+            stage_keys.setScene(scene_keys);
+            stage_keys.setTitle("Help game keys");
+
+            Label[] labels = new Label[5];
+            labels[0] = new Label("Voici les touches pour jouer à ce jeu :");
+            labels[1] = new Label("Q => déplacement vers la gauche");
+            labels[2] = new Label("D => déplacement vers la droite");
+            labels[3] = new Label("Z => saut");
+            labels[4] = new Label("E => intéraction avec le PNJ");
+
+            keys.setId("title");
+            for (int i = 0; i<5; i++) {
+                labels[i].getStyleClass().add("keys");
+            }
+            keys.getChildren().addAll(labels);
+
+            stage_keys.show();
+        }
+    }
 	
 	private void handleKeyPressed(KeyEvent e) {
 		if(e.getCode() == KeyCode.Q) {
-			player.vX = -5;
+			player.vX = -4;
 		}
 		if(e.getCode() == KeyCode.D) {
-			player.vX = 5;
+			player.vX = 4;
 		}
 		if (e.getCode() == KeyCode.Z && player.canJump()) {
 			if (player.inventaire.contains("Plume")) { //On regarde si dans l'inventaire, l'objet Plume est présent
 				player.vY += P_JUMP_OBJ;
 			}else if(player.inventaire.contains("Trampoline")){
-				player.vY += P_JUMP_OBJ;
+				player.vY += P_JUMP_RESSORT;
 				player.inventaire.remove("Trampoline");
 			}else {
 				player.vY += P_JUMP;
@@ -148,5 +183,28 @@ public class Controller {
 		}
 	}
 	
+	private void goal() {
+        // Creation du nouveau pane contenant le message
+        Pane pane_goal = new Pane();
+        pane_goal.setPickOnBounds(false); 
+        pane.getChildren().add(pane_goal);
+        // Initialisation du label du nouveau pane
+        Label goal = new Label("Atteignez le drapeau en mangeant toutes les pommes !");
+        Label goal_suite = new Label("(Cliquer sur le bouton Help pour connaître les touches avec lesquels jouer)");
+        goal.setId("goal");
+        goal_suite.setId("goal");
+        pane_goal.getChildren().add(goal);
+        pane_goal.getChildren().add(goal_suite);
+        goal.setLayoutX(240);
+        goal.setLayoutY(320);
+        goal_suite.setLayoutX(160);
+        goal_suite.setLayoutY(350);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            pane_goal.getChildren().remove(goal);
+            pane_goal.getChildren().remove(goal_suite);
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
 
 }

@@ -82,7 +82,7 @@ public class Collisions {
 	
 	static void flagCollision(Player p, Flag flag, Pane pane, Text counter) {
 		if ((Math.abs(p.getX()-flag.getX()) <= 20 ) && (Math.abs(p.getY()-flag.getY()) <= 20 )) {
-			if (counter.getText().equals("9")) {
+			if (counter.getText().equals("10")) {
 				Game.victory(pane);
 			}else {
 				System.out.println("Va chercher les autres pommes");
