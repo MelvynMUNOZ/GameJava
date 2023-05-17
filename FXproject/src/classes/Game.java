@@ -22,8 +22,14 @@ public class Game extends AnimationTimer {
 	final Pane pane;
 	final Text counter;
 	final Flag flag;
+<<<<<<< Updated upstream
 	
 	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag) {
+=======
+	private static boolean potion;
+	
+	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag, List<MapEntity> tileMapPotion) {
+>>>>>>> Stashed changes
 		this.player = player;
 		this.enemy = enemy;
 		this.tileMap = tileMap;
@@ -38,6 +44,7 @@ public class Game extends AnimationTimer {
 		getInputs();
 	}
 	
+<<<<<<< Updated upstream
 	void getInputs() {
 		player.moveY();
 		Collisions.collisionPlatformY(player,tileMap,pane);
@@ -45,6 +52,22 @@ public class Game extends AnimationTimer {
 		Collisions.collisionPlatformX(player,tileMap,pane);
 		Collisions.flagCollision(player, flag, pane, counter);
 		
+=======
+	public void getInputs() {
+		if (potion == true) {
+			player.moveY();
+			Collisions.collisionPlatformY(player,tileMapPotion,pane);
+			player.moveX();
+			Collisions.collisionPlatformX(player,tileMapPotion,pane);
+			Collisions.flagCollision(player, flag, pane, counter);
+		}else {
+			player.moveY();
+			Collisions.collisionPlatformY(player,tileMap,pane);
+			player.moveX();
+			Collisions.collisionPlatformX(player,tileMap,pane);
+			Collisions.flagCollision(player, flag, pane, counter);
+		}
+>>>>>>> Stashed changes
 	}
 	
 	public static void end(Pane pane) {

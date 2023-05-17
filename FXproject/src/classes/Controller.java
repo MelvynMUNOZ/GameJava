@@ -37,7 +37,7 @@ public class Controller {
 	
 	private static int obj;
 	
-	private static int inventaire_indice = 0;
+	public int inventaire_indice = 0;
 	
 	private Stage stage_keys = new Stage();
 	
@@ -45,7 +45,7 @@ public class Controller {
 	public Pane pane;
 	
 	@FXML
-	public Text counter;
+	private Text counter;
 	
 	@FXML
 	private Pane inventaire1;
@@ -119,7 +119,6 @@ public class Controller {
 	
 	@FXML
 	private void start() {
-		//pop up "Attraper tous les fruits pour gagner la partie"
 		pane.requestFocus();
 		game.start();
 		enemy.automaticMove(enemy,tileMap,pane);
@@ -148,8 +147,8 @@ public class Controller {
             labels[2] = new Label("D => déplacement vers la droite");
             labels[3] = new Label("Z => saut");
             labels[4] = new Label("E => intéraction avec le PNJ");
-            labels[5] = new Label("Flèche de gauche <  => décale la sélection de l'objet de l'inventaire à la case de gauche");
-            labels[6] = new Label("Flèche de droite >  => décale la sélection de l'objet de l'inventaire à la case de droite");
+            labels[5] = new Label("1 (pas sur le pavé numérique) => décale la sélection de l'objet de l'inventaire à la case de gauche");
+            labels[6] = new Label("2 (pas sur le pavé numérique)  => décale la sélection de l'objet de l'inventaire à la case de droite");
 
             keys.setId("title");
             for (int i = 0; i<7; i++) {
@@ -159,8 +158,13 @@ public class Controller {
 
             stage_keys.show();
         }
+        
+        //test pour le restart
+        //il faut faire une fonction qui supprime tout du pane mais pas les boutons- et qui remets le comopteur à 0
+        init();
+        start();
     }
-	
+		
 	private void handleKeyPressed(KeyEvent e) {
 		if(e.getCode() == KeyCode.Q) {
 			player.vX = -4;
@@ -182,12 +186,12 @@ public class Controller {
 		if (e.getCode() == KeyCode.E) {
 			Pnj.proximitePnj(player, pnj, obj, pane, player.inventaire, inventaire1, Integer.valueOf(counter.getText()), inventaire2);
 		}
-		if (e.getCode() == KeyCode.RIGHT) {
+		if (e.getCode() == KeyCode.DIGIT2) {
 			inventaire_indice++;
 			inventaire_indice = inventaire_indice%4;
 			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 		}
-		if (e.getCode() == KeyCode.LEFT) {
+		if (e.getCode() == KeyCode.DIGIT1) {
 			inventaire_indice--;
 			inventaire_indice = inventaire_indice%4;
 			if (inventaire_indice<0){

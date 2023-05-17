@@ -12,7 +12,6 @@ public class Jeu extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = FXMLLoader.load(getClass().getResource("/map.fxml"));
-			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("/jeu.css").toExternalForm());
 			primaryStage.setScene(scene);
