@@ -5,7 +5,6 @@ import static classes.TileMaps.tileMap;
 import classes.Flag;
 import static classes.Game.*;
 import static utils.Constants.*;
-import static classes.AnimationSprites.*;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -101,13 +100,6 @@ public class Controller {
 						pane.getChildren().remove(apples[i]);
 						apples[i] = null;
 						counter.setText(String.valueOf(Integer.valueOf(counter.getText())+1));
-						System.out.println(counter);
-						System.out.println(counter.getText());
-						if(Integer.valueOf(counter.getText()) == 1) {
-							//Game.victory(pane); //a appeler à un autre endroit
-						}
-						AnimationSprites animation_test = new AnimationSprites(32, 32, 200, 200);
-						animation_test.animatedPlayer(player);
 					}
 				}
 			}
