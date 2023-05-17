@@ -2,8 +2,6 @@ package classes;
 
 import static classes.TileMaps.tileMapPotion;
 import static classes.TileMaps.tileMap;
-import classes.Flag;
-import static classes.Game.*;
 import static utils.Constants.*;
 
 import javafx.animation.AnimationTimer;
@@ -15,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -38,6 +35,8 @@ public class Controller {
 	
 	private static int obj;
 	
+	private static int inventaire_indice = 0;
+	
 	private Stage stage_keys = new Stage();
 	
 	@FXML
@@ -54,6 +53,9 @@ public class Controller {
 	
 	@FXML
 	private Pane inventaire3;
+	
+	@FXML
+	private Pane inventaire4;
 	
 	public Controller(){}
 	
@@ -111,8 +113,6 @@ public class Controller {
 		pane.setOnKeyPressed(this::handleKeyPressed);
 		pane.setOnKeyReleased(this::handleKeyReleased);
 		
-	
-		
 	}
 	
 	@FXML
@@ -122,6 +122,7 @@ public class Controller {
 		game.start();
 		enemy.automaticMove(enemy,tileMap,pane);
 		goal();
+		player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 	}
 	
 	@FXML
@@ -134,20 +135,22 @@ public class Controller {
             VBox keys = new VBox();
             Scene scene_keys = new Scene(keys);
             scene_keys.getStylesheets().add(getClass().getResource("/jeu.css").toExternalForm());
-            stage_keys.setWidth(300);
-            stage_keys.setHeight(200);
+            stage_keys.setWidth(520);
+            stage_keys.setHeight(250);
             stage_keys.setScene(scene_keys);
             stage_keys.setTitle("Help game keys");
 
-            Label[] labels = new Label[5];
+            Label[] labels = new Label[7];
             labels[0] = new Label("Voici les touches pour jouer à ce jeu :");
             labels[1] = new Label("Q => déplacement vers la gauche");
             labels[2] = new Label("D => déplacement vers la droite");
             labels[3] = new Label("Z => saut");
             labels[4] = new Label("E => intéraction avec le PNJ");
+            labels[5] = new Label("Flèche de gauche <  => décale la sélection de l'objet de l'inventaire à la case de gauche");
+            labels[6] = new Label("Flèche de droite >  => décale la sélection de l'objet de l'inventaire à la case de droite");
 
             keys.setId("title");
-            for (int i = 0; i<5; i++) {
+            for (int i = 0; i<7; i++) {
                 labels[i].getStyleClass().add("keys");
             }
             keys.getChildren().addAll(labels);
@@ -164,9 +167,9 @@ public class Controller {
 			player.vX = 4;
 		}
 		if (e.getCode() == KeyCode.Z && player.canJump()) {
-			if (player.inventaire.contains("Plume")) { //On regarde si dans l'inventaire, l'objet Plume est présent
+			if (player.checkInventaireSelected(1, inventaire1, inventaire2, inventaire3, inventaire4, player.inventaire)) {
 				player.vY += P_JUMP_OBJ;
-			}else if(player.inventaire.contains("Trampoline")){
+			}else if(player.checkInventaireSelected(2, inventaire1, inventaire2, inventaire3, inventaire4, player.inventaire)){
 				player.vY += P_JUMP_RESSORT;
 				inventaire2.getChildren().clear();
 				player.inventaire.remove("Trampoline");
@@ -176,6 +179,19 @@ public class Controller {
 		}
 		if (e.getCode() == KeyCode.E) {
 			Pnj.proximitePnj(player, pnj, obj, pane, player.inventaire, inventaire1, Integer.valueOf(counter.getText()), inventaire2);
+		}
+		if (e.getCode() == KeyCode.RIGHT) {
+			inventaire_indice++;
+			inventaire_indice = inventaire_indice%4;
+			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
+		}
+		if (e.getCode() == KeyCode.LEFT) {
+			inventaire_indice--;
+			inventaire_indice = inventaire_indice%4;
+			if (inventaire_indice<0){
+				inventaire_indice = inventaire_indice+4;
+			}
+			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 		}
 	}
 	

@@ -25,11 +25,6 @@ public class Enemy extends ImageView{
 		setImage(ENEMY_IDLE_IMG);
 	}
 	
-	// a voir si on met public ou private
-	public void moveX() {
-		setX(getX() + vX);
-	}
-	
 	public static void collisionEnemy(Player p, Enemy e, Pane pane) {
 		if(enemyDead == false) {
 			if (p.getY()>= e.getY() && p.getY()<e.getY()+P_HEIGHT) {

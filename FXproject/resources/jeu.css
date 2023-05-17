@@ -19,3 +19,9 @@
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
+
+.inventary_actived {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}

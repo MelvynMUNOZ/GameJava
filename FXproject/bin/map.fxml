@@ -82,7 +82,7 @@
                      <children>
                         <Pane fx:id="inventaire1" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: white;">
                            <HBox.margin>
-                              <Insets left="110.0" />
+                              <Insets left="60.0" />
                            </HBox.margin>
                         </Pane>
                         <Pane fx:id="inventaire2" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: white;">
@@ -91,6 +91,11 @@
                            </HBox.margin>
                         </Pane>
                         <Pane fx:id="inventaire3" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: white;">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </Pane>
+                        <Pane fx:id="inventaire4" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: white;">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
