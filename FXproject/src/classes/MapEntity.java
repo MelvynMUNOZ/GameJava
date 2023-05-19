@@ -2,12 +2,26 @@ package classes;
 
 import static utils.Constants.*;
 
+
+
 import javafx.scene.image.ImageView;
 
+/**
+ * This class represents a map entity which is a subclass of ImageView.
+ * Each map entity has a specific type defined by EMapType and an associated image.
+ */
 public class MapEntity extends ImageView {
-
+	
+	// The type of the map entity// Le type de l'entité de la carte
 	final EMapType type;
 	
+	/**
+     * Constructs a new map entity with the specified coordinates and type.
+     *
+     * @param x the x coordinate of the entity on the map
+     * @param y the y coordinate of the entity on the map
+     * @param type the type of the map entity
+     */
 	public MapEntity(double x, double y, EMapType type) {
 		setX(x);
 		setY(y);
@@ -48,6 +62,11 @@ public class MapEntity extends ImageView {
 		});
 	}
 	
+	/**
+     * Returns the type of this map entity.
+     *
+     * @return the type of the map entity
+     */
 	public EMapType getType() {
 	    return type;
 	}

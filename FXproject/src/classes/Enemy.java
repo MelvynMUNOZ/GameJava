@@ -12,19 +12,36 @@ import static utils.Constants.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Enemy class represents an enemy in a game. It extends ImageView to be able to display an image representing the enemy.
+ */
 public class Enemy extends ImageView{
 	
 	double vX;
 	boolean collision_right;
 	private static boolean enemyDead = false;
 	List<String> inventaireEnemy = new ArrayList<String>();
-
+	
+	
+	/**
+	 * Creates a new enemy at the specified coordinates.
+	 *
+	 * @param x the x coordinate of the enemy
+	 * @param y the y coordinate of the enemy
+	 */
 	public Enemy(double x, double y) {
 		setX(x);
 		setY(y);
 		setImage(ENEMY_IDLE_IMG);
 	}
 	
+	/**
+	 * Handles the collision between a player and an enemy. If the player collides with the enemy, the game ends.
+	 *
+	 * @param p the player
+	 * @param e the enemy
+	 * @param pane the javafx panel on which the player and enemy are displayed
+	 */
 	public static void collisionEnemy(Player p, Enemy e, Pane pane) {
 		if(enemyDead == false) {
 			if (p.getY()>= e.getY() && p.getY()<e.getY()+P_HEIGHT) {
@@ -53,7 +70,15 @@ public class Enemy extends ImageView{
 		}
 	}
 	
-	public static void automaticMove(Enemy e, List<MapEntity> tileMap, Pane pane) { //faire un timer qui fait bouger le perso 1 fois toutes les secondes
+	
+	/**
+	 * Handles the collision between a player and an enemy. If the player collides with the enemy, the game ends.
+	 *
+	 * @param p the player
+	 * @param e the enemy
+	 * @param pane the javafx panel on which the player and enemy are displayed
+	 */
+	public static void automaticMove(Enemy e, List<MapEntity> tileMap, Pane pane) { 
 		e.collision_right = false;
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.02), event -> {
 			if (e.collision_right == false) {

@@ -4,34 +4,59 @@ import static utils.Constants.*;
 import static classes.Collisions.collide;
 import static classes.TileMaps.tileMap;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+
+
+/**
+ * This class represents a player in the game.
+ * The player is represented by an image and has a position and a speed on the X and Y axes.
+ * It also has an inventory for storing objects.
+ */
 public class Player extends ImageView {
 	
-	double vX;
-	double vY;
-	List<String> inventaire = new ArrayList<String>();
-
+	double vX; // Speed on the X axis
+	double vY; // Speed on the Y axis
+	List<String> inventaire = new ArrayList<String>(); // Player's inventory
+	
+	
+	/**
+	 * Player constructor.
+	 *
+	 * @param x the initial position of the player on the X axis
+	 * @param y the initial position of the player on the Y axis
+	 */
 	public Player(double x, double y) {
 		setX(x);
 		setY(y);
 		setImage(PLAYER_IMG);
 	}
 	
+
+	/**
+	 * Moves the player on the X axis according to its speed.
+	 */
 	public void moveX() {
 		setX(getX() + vX);
 	}
 	
+	/**
+	 * Moves the player on the Y axis according to its speed and gravity.
+	 */
 	public void moveY() {
 		vY += GRAVITY;
 		setY(getY() + vY);
 	}
 	
+	/**
+	 * Checks if the player can jump by verifying if there is an obstacle below him.
+	 *
+	 * @return true if the player can jump, false otherwise
+	 */
 	public boolean canJump() {
 		Predicate<MapEntity> pr = tile -> collide(this,tile);
 		var op = tileMap.stream().filter(pr);
@@ -40,12 +65,12 @@ public class Player extends ImageView {
 	}
 	
 	/**
-	 * Deplace la bordure rouge sur la cases d'inventaire précédente ou suivante
-	 * @param indice		indice de la selection de l'objet
-	 * @param inventaire1	pane qui contient l'inventaire 1
-	 * @param inventaire2	pane qui contient l'inventaire 2
-	 * @param inventaire3	pane qui contient l'inventaire 3
-	 * @param inventaire4	pane qui contient l'inventaire 4
+	 * Moves the red border to the previous or next inventory slot
+	 * @param index			index of the object selection
+	 * @param inventory1	pane containing inventory 1
+	 * @param inventory2	pane containing inventory 2
+	 * @param inventory3	pane containing inventory 3
+	 * @param inventory4	pane containing inventory 4
 	 */
 	public void selectInventaire(int indice, Pane inventaire1, Pane inventaire2, Pane inventaire3, Pane inventaire4) {
 		switch (indice) {
@@ -72,12 +97,12 @@ public class Player extends ImageView {
 	}
 	
 	/**
-	 * Enlève le style css qui met une bordure rouge sur l'objet sélectionné
-	 * @param indice		indice de la selection de l'objet
-	 * @param inventaire1	pane qui contient l'inventaire 1
-	 * @param inventaire2	pane qui contient l'inventaire 2
-	 * @param inventaire3	pane qui contient l'inventaire 3
-	 * @param inventaire3	pane qui contient l'inventaire 4
+	 * Removes the CSS style that places a red border on the selected item
+	 * @param index			index of the object selection
+	 * @param inventory1	pane containing inventory 1
+	 * @param inventory2	pane containing inventory 2
+	 * @param inventory3	pane containing inventory 3
+	 * @param inventory4	pane containing inventory 4
 	 */
 	private void removeBorderInventaire(int indice, Pane inventaire1, Pane inventaire2, Pane inventaire3, Pane inventaire4) {
 		if(inventaire1.getStyleClass().contains("inventary_actived")) {
@@ -92,14 +117,14 @@ public class Player extends ImageView {
 	}
 	
 	/**
-	 * Indique si l'objet de l'inventaire recherché est choisi ou non
-	 * @param indice		indice de la selection de l'objet
-	 * @param inventaire1	pane qui contient l'inventaire 1
-	 * @param inventaire2	pane qui contient l'inventaire 2
-	 * @param inventaire3	pane qui contient l'inventaire 3
-	 * @param inventaire3	pane qui contient l'inventaire 4
-	 * @param inventaire	l'inventaire du player
-	 * @return 				boolean indique si l'objet de l'inventaire est sélectionné et présent
+	 * Indicates whether the searched inventory item is selected or not
+	 * @param index			index of the object selection
+	 * @param inventory1	pane containing inventory 1
+	 * @param inventory2	pane containing inventory 2
+	 * @param inventory3	pane containing inventory 3
+	 * @param inventory4	pane containing inventory 4
+	 * @param inventory		the player's inventory
+	 * @return 				boolean indicating whether the inventory item is selected and present
 	 */
 	public boolean checkInventaireSelected(int indice, Pane inventaire1, Pane inventaire2, Pane inventaire3, Pane inventaire4,  List<String> inventaire) {
 		boolean selected = false;

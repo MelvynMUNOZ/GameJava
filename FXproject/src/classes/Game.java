@@ -8,40 +8,65 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+
+/**
+ * Main game class managing game logic, animations, and event handling.
+ * It extends AnimationTimer in order to execute a game loop.
+ */
 public class Game extends AnimationTimer {
 
 	final Player player;
 	final Enemy enemy;
 	final List<MapEntity> tileMap;
-	final List<MapEntity> tileMapPotion;
+	final List<MapEntity> tileMapNoWall;
 	final Pane pane;
 	final Text counter;
 	final Flag flag;
 	
-	private static boolean potion;
+	private static boolean noWall;
 	
-	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag, List<MapEntity> tileMapPotion) {
+	/**
+     * Constructor for the Game class.
+     *
+     * @param player the player
+     * @param enemy the enemy
+     * @param tileMap the game map
+     * @param pane the javafx pane
+     * @param counter the text counter
+     * @param flag the flag
+     * @param tileMapNoWALL 
+     */
+	public Game(Player player, Enemy enemy, List<MapEntity> tileMap, Pane pane, Text counter, Flag flag, List<MapEntity> tileMapNoWall) {
 		this.player = player;
 		this.enemy = enemy;
 		this.tileMap = tileMap;
 		this.pane = pane;
 		this.counter = counter;
 		this.flag = flag;
-		this.tileMapPotion = tileMapPotion;
+		this.tileMapNoWall = tileMapNoWall;
 	}
-
+	
+	/**
+     * Overriding the handle method of the AnimationTimer class.
+     * It is called on every frame of the animation.
+     *
+     * @param time the elapsed time since the last call in nanoseconds
+     */
 	@Override
 	public void handle(long time) { //verifie en boucle
 		Enemy.collisionEnemy(player,enemy,pane); 
 		getInputs();
 	}
 	
+	/**
+     * Method to handle player inputs.
+     */
 	void getInputs() {
-		if (potion == true) {
+		if (noWall == true) {
 			player.moveY();
-			Collisions.collisionPlatformY(player,tileMapPotion,pane);
+			Collisions.collisionPlatformY(player,tileMapNoWall,pane);
 			player.moveX();
-			Collisions.collisionPlatformX(player,tileMapPotion,pane);
+			Collisions.collisionPlatformX(player,tileMapNoWall,pane);
 			Collisions.flagCollision(player, flag, pane, counter);
 		}else {
 			player.moveY();
@@ -52,12 +77,17 @@ public class Game extends AnimationTimer {
 		}
 	}
 	
+	/**
+     * Displays a game over screen in case of defeat.
+     *
+     * @param pane the javafx pane
+     */
 	public static void end(Pane pane) {
 		pane.getChildren().clear();
 		Image image = new Image("GAMEOVER.png");
 		ImageView imageView = new ImageView(image);
 		
-		// Positionnement de l'ImageView au centre de la pane
+		// Positioning the ImageView in the center of the pane
         imageView.setLayoutX((pane.getWidth() - imageView.getBoundsInLocal().getWidth()) / 2);
         imageView.setLayoutY((pane.getHeight() - imageView.getBoundsInLocal().getHeight()) / 2);
         
@@ -66,12 +96,17 @@ public class Game extends AnimationTimer {
         pane.getChildren().add(imageView);
 	}
 	
+	/**
+     * Displays a victory screen in case of win.
+     *
+     * @param pane the javafx pane
+     */
 	public static void victory(Pane pane) {
 		pane.getChildren().clear();
 		Image image = new Image("VICTORY.png");
 		ImageView imageView = new ImageView(image);
 		
-		// Positionnement de l'ImageView au centre de la pane
+		// Positioning the ImageView in the center of the pane
         imageView.setLayoutX((pane.getWidth() - imageView.getBoundsInLocal().getWidth()) / 2);
         imageView.setLayoutY((pane.getHeight() - imageView.getBoundsInLocal().getHeight()) / 2);
         
@@ -81,11 +116,14 @@ public class Game extends AnimationTimer {
 		
 	}
 	
-	public static void setPotion () {
-		if (potion == true) {
-			potion = false;
+	/**
+     * Method to toggle the NoWall state (enable/disable).
+     */
+	public static void setNoWALL () {
+		if (noWall == true) {
+			noWall = false;
 		}else {
-			potion = true;
+			noWall = true;
 		}
 	}
 	

@@ -14,14 +14,23 @@ import java.util.function.Predicate;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-
+/**
+ * This class provides static methods for handling collisions in a game.
+ */
 public class Collisions {
 
+	// Private constructor to prevent instantiation of this class
 	private Collisions() {
 		
 	}
 	
-	//a voir si on met private ou public
+	/**
+     * Checks if a player collides with a map entity.
+     *
+     * @param p the player
+     * @param e the map entity
+     * @return true if the player and the entity collide, false otherwise
+     */
 	public static boolean collide(Player p, MapEntity e) {
 		return (p.getX() + P_WIDTH > e.getX() &&
 				p.getY() + P_HEIGHT > e.getY() &&
@@ -29,6 +38,13 @@ public class Collisions {
 				p.getY() < e.getY() + TILE_SIZE);
 	}
 	
+	/**
+     * Checks if an enemy collides with a map entity.
+     *
+     * @param enemy the enemy
+     * @param e the map entity
+     * @return true if the enemy and the entity collide, false otherwise
+     */
 	public static boolean collideEnemy(Enemy enemy, MapEntity e) {
 		return (enemy.getX() + P_WIDTH > e.getX() &&
 				enemy.getY() + P_HEIGHT > e.getY() &&
@@ -36,6 +52,14 @@ public class Collisions {
 				enemy.getY() < e.getY() + TILE_SIZE);
 	}
 	
+	
+	/**
+     * Handles the player's collisions with the map entities on the X axis.
+     *
+     * @param p the player
+     * @param tileMap the list of map entities
+     * @param pane the javafx pane
+     */
 	public static void collisionPlatformX(Player p, List<MapEntity> tileMap, Pane pane) {
 		Predicate<MapEntity> pr = tile -> collide(p, tile);
 		var op = tileMap.stream().filter(pr).findFirst();
@@ -52,6 +76,15 @@ public class Collisions {
 		}
 	}
 	
+	
+	/**
+     * Checks if an enemy collides with a map entity on the X axis.
+     *
+     * @param enemy the enemy
+     * @param tileMap the list of map entities
+     * @param pane the javafx pane
+     * @return true if the enemy collides with an entity on the X axis, false otherwise
+     */
 	public static boolean collisionPlatformXEnemy(Enemy enemy, List<MapEntity> tileMap, Pane pane) {
 		Predicate<MapEntity> pr = tile -> collideEnemy(enemy, tile);
 		var op = tileMap.stream().filter(pr).findFirst();
@@ -64,6 +97,14 @@ public class Collisions {
 		return collisionX;
 	}
 	
+	
+	/**
+     * Handles the player's collisions with the map entities on the Y axis.
+     *
+     * @param p the player
+     * @param tileMap the list of map entities
+     * @param pane the javafx pane
+     */
 	static void collisionPlatformY(Player p, List<MapEntity> tileMap, Pane pane) {
 		Predicate<MapEntity> pr = tile -> collide(p, tile);
 		var op = tileMap.stream().filter(pr).findFirst();
@@ -73,7 +114,7 @@ public class Collisions {
                 Game.end(pane);
             }
 			if (e.getType() == GOLD) {
-				Game.setPotion();
+				Game.setNoWALL();
 			}
 			if(p.vY > 0) {
 				p.setY(e.getY() - P_HEIGHT); //dans le cas où l'obstacle est à droite du player
@@ -84,6 +125,15 @@ public class Collisions {
 		}
 	}
 	
+	
+	/**
+     * Handles the player's collision with the flag.
+     *
+     * @param p the player
+     * @param flag the flag
+     * @param pane the javafx pane
+     * @param counter the text counter
+     */
 	static void flagCollision(Player p, Flag flag, Pane pane, Text counter) {
 		if ((Math.abs(p.getX()-flag.getX()) <= 20 ) && (Math.abs(p.getY()-flag.getY()) <= 20 )) {
 			if (counter.getText().equals("10")) {

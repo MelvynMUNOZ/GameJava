@@ -6,8 +6,13 @@ import static utils.Constants.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileMaps {
 
+/**
+ * This class provides methods to initialize the game map.
+ * It creates and places different entities on the map according to the predefined configuration.
+ */
+public class TileMaps {
+	// The character array representing the configuration of the map
 	protected static final String[] map= 
 		{"-giiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiih",
 	   "-k-------------------------------------j",
@@ -35,12 +40,19 @@ public class TileMaps {
 	   "ommmmmmmmmmmmmmmmmmmmpeeeeermmmmmmmmmmq-",
 	   "---------------------ommmmmq------------",};
 		
+		// The list of entities on the map
 		protected static List<MapEntity> tileMap = new ArrayList<>();
 		
-		protected static List<MapEntity> tileMapPotion = new ArrayList<>();
-		
+		// The list of entities on the map where a potion can appear
+	    protected static List<MapEntity> tileMapNoWall = new ArrayList<>();
+
+	    // Private constructor to prevent instantiation of this class
 		private TileMaps() {}
 		
+		/**
+	     * Initializes the game map.
+	     * Creates and places different entities on the map according to the predefined configuration.
+	     */
 		public static void initMap() {
 			for(var i=0; i<25; i++) {
 				for (var j=0; j<40; j++) {
@@ -82,7 +94,7 @@ public class TileMaps {
 			        }
 					if (type == BRIQUE || type == SOLG || type == SOLM || type == SOLD || type == PLATFORME || type == PLATFORMEG || type == PLATFORMEM || type == PLATFORMED || type == PLATFORMEHG || type == PLATFORMEHD || type == PLATFORMEBG || type == PLATFORMEBD || type == GOLD
 							|| type == COTEVD || type == COTEVG || type == COTEB || type == COTE1 || type == COTE2 || type == COTE3 || type == COTE4 || type == COTE5 || type == COTE6 || type == BOISG || type == BOISD || type == BOISH || type == BOISV || type == IDLE || type == IDLE2) {
-						tileMapPotion.add(new MapEntity(j * TILE_SIZE, (i+3) * TILE_SIZE, type));
+						tileMapNoWall.add(new MapEntity(j * TILE_SIZE, (i+3) * TILE_SIZE, type));
 					}
 				}
 			}

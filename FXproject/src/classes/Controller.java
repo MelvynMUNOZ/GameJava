@@ -1,16 +1,14 @@
 package classes;
 
-import static classes.TileMaps.tileMapPotion;
+import static classes.TileMaps.tileMapNoWall;
 import static classes.TileMaps.tileMap;
 import static utils.Constants.*;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -19,119 +17,123 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The Controller class is used to manage the interactions between the user and the game.
+ * It initializes and controls the game, the players, the enemies, the NPC, the flags, the items, and the inventory.
+ */
+
 public class Controller {
 	
-	private Player player;
-	private Game game;
+	private Player player; // The player controlled by the user
+	private Game game; // Instance of the game
 	
-	private ImageView[] apples;
+	private Enemy enemy; // The enemy in the game
 	
-	private Enemy enemy;
+	private Pnj pnj; // The NPC in the game
 	
-	private Pnj pnj;
+	private Flag flagB;  // The bottom flag in the game
+	private Flag flagT;  // The top flag in the game
 	
-	private Flag flagB;
-	private Flag flagT;
+	private static int obj;  // The currently used object
 	
-	private static int obj;
+	private static int inventaire_indice = 0;  // The inventory index
 	
-	private static int inventaire_indice = 0;
+	private Stage stage_keys = new Stage();  // The stage of the keys
 	
-	private Stage stage_keys = new Stage();
+	private static boolean alreadyInit;
 	
-	@FXML
-	public Pane pane;
-	
-	@FXML
-	public Text counter;
+	private static boolean alreadyStart;
 	
 	@FXML
-	private Pane inventaire1;
+	public Pane pane;  // The main panel of the game
 	
 	@FXML
-	private Pane inventaire2;
+	public Text counter;  // The counter in the game
 	
 	@FXML
-	private Pane inventaire3;
+	private Pane inventaire1;  // The first inventory
 	
 	@FXML
-	private Pane inventaire4;
+	private Pane inventaire2;  // The second inventory
 	
+	@FXML
+	private Pane inventaire3;  // The third inventory
+	
+	@FXML
+	private Pane inventaire4;  // The fourth inventory
+	
+	/**
+	 * Default constructor.
+	 */
 	public Controller(){}
 	
+	
+	/**
+	 * Sets the currently used object.
+	 * @param val The value of the object to set.
+	 */
 	public static void setObj(int val) {
 		obj = val;
 	}
 	
+	/**
+	 * Initializes the game by creating the entities, setting up the panel.
+	 */
 	@FXML
 	private void init() {
-		//initialise la map, le joueur et les compteurs
-		TileMaps.initMap();
-		player = new Player(50, 500);
-		pnj = new Pnj(527,567);
-		enemy = new Enemy(800,568); // a replacer correctement avec la map
-		flagB = new Flag(900 ,240 ,FLAGB_IMG);
-		flagT = new Flag(900 ,216 ,FLAGT_IMG);
-		
-		game = new Game(player,enemy,tileMap,pane,counter,flagB, tileMapPotion);
-		pane.getChildren().addAll(tileMap);
-		pane.getChildren().add(player);
-		pane.getChildren().add(enemy);
-		pane.getChildren().add(pnj);
-		pane.getChildren().add(flagB);
-		pane.getChildren().add(flagT);
-		//ajout des pommes
-		apples = new ImageView[10];
-		apples[0] = new Items(73,211);
-		apples[1] = new Items(85,430);
-		apples[2] = new Items(140,550);
-		apples[3] = new Items(270,430);
-		apples[4] = new Items(280,235);
-		apples[5] = new Items(370,235);
-		apples[6] = new Items(495,405);
-		apples[7] = new Items(675,140);
-		apples[8] = new Items(745,260);
-		apples[9] = new Items(810,568);
-		pane.getChildren().addAll(apples);
-		// On démare un AnimationTimer pour verifier la collision avec les items apres chaque frame
-		AnimationTimer timer = new AnimationTimer() {
-			@Override
-			public void handle(long time) {
-				for (int i = 0; i < apples.length; i++) {
-					if (apples[i] != null && apples[i].getBoundsInParent().intersects(player.getBoundsInParent())) {
-						pane.getChildren().remove(apples[i]);
-						apples[i] = null;
-						counter.setText(String.valueOf(Integer.valueOf(counter.getText())+1));
-					}
-				}
-			}
-			
-		};
-		timer.start();
-		
-		// permet de vérifier les touches enfoncées par l'utilisateur (pour déplacer le joueur)
-		pane.setOnKeyPressed(this::handleKeyPressed);
-		pane.setOnKeyReleased(this::handleKeyReleased);
-		
+		if (alreadyInit == false) {
+			// Initializes the map, the player, and the counters
+			TileMaps.initMap();
+			player = new Player(50, 500);
+			pnj = new Pnj(527,567);
+			enemy = new Enemy(800,568); 
+			flagB = new Flag(900 ,240 ,FLAGB_IMG);
+			flagT = new Flag(900 ,216 ,FLAGT_IMG);
+						
+			game = new Game(player,enemy,tileMap,pane,counter,flagB, tileMapNoWall);
+			pane.getChildren().addAll(tileMap);
+			pane.getChildren().add(player);
+			pane.getChildren().add(enemy);
+			pane.getChildren().add(pnj);
+			pane.getChildren().add(flagB);
+			pane.getChildren().add(flagT);
+			// Adding apples
+			Apples.genereApple(pane, counter, player);
+						
+			// Allows to check the keys pressed by the user (to move the player)
+			pane.setOnKeyPressed(this::handleKeyPressed);
+			pane.setOnKeyReleased(this::handleKeyReleased);
+			alreadyInit = true;
+		}
 	}
 	
+	/**
+	 * Starts the game by requesting the panel's focus, starting the game and the enemy, and selecting the inventory.
+	 */
 	@FXML
 	private void start() {
+		if (alreadyStart == false) {
 		//pop up "Attraper tous les fruits pour gagner la partie"
 		pane.requestFocus();
 		game.start();
 		enemy.automaticMove(enemy,tileMap,pane);
 		goal();
 		player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
+		alreadyStart = true;
+		}
 	}
 	
+	
+	/**
+	 * Displays a pop-up window with the game controls when called.
+	 */
 	@FXML
     private void help() {
         if(stage_keys != null && stage_keys.isShowing()) {
             stage_keys.close();
         }
         else {
-            //affichage pop up pour les commandes
+        	// Pop up display for the commands
             VBox keys = new VBox();
             Scene scene_keys = new Scene(keys);
             scene_keys.getStylesheets().add(getClass().getResource("/jeu.css").toExternalForm());
@@ -159,6 +161,10 @@ public class Controller {
         }
     }
 	
+	/**
+	 * Handles the key press events to move the player and interact with the game.
+	 * @param e The key press event.
+	 */
 	private void handleKeyPressed(KeyEvent e) {
 		if(e.getCode() == KeyCode.Q) {
 			player.vX = -4;
@@ -180,12 +186,12 @@ public class Controller {
 		if (e.getCode() == KeyCode.E) {
 			Pnj.proximitePnj(player, pnj, obj, pane, player.inventaire, inventaire1, Integer.valueOf(counter.getText()), inventaire2);
 		}
-		if (e.getCode() == KeyCode.RIGHT) {
+		if (e.getCode() == KeyCode.DIGIT2) {
 			inventaire_indice++;
 			inventaire_indice = inventaire_indice%4;
 			player.selectInventaire(inventaire_indice, inventaire1, inventaire2, inventaire3, inventaire4);
 		}
-		if (e.getCode() == KeyCode.LEFT) {
+		if (e.getCode() == KeyCode.DIGIT1) {
 			inventaire_indice--;
 			inventaire_indice = inventaire_indice%4;
 			if (inventaire_indice<0){
@@ -201,6 +207,10 @@ public class Controller {
 		}
 	}
 	
+	
+	/**
+	 * Displays the goal of the game to the user.
+	 */
 	private void goal() {
         // Creation du nouveau pane contenant le message
         Pane pane_goal = new Pane();

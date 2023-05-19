@@ -2,15 +2,11 @@ package utils;
 
 import javafx.scene.image.Image;
 
+/**
+ * The Constants class is used to store all necessary constants for the game.
+ * It contains static images for different game entities and constant values for game properties.
+ */
 public class Constants {
-
-//	public static final double TILE_SIZE = 16;
-	
-//	public static final Image SOL_IMG = new Image("sol1.png");
-//	// declarer les autres images
-//	public static final Image EMPTY_IMG = new Image("empty.png");
-	
-	//pour tester avec les images de 32 pixels
 	
 	public static final double TILE_SIZE = 24;
 	
@@ -47,8 +43,7 @@ public class Constants {
 	public static final Image COTE6_IMG = new Image("Cote6.png");
 	public static final Image GOLD_IMG = new Image("Gold.png");
 	
-	public static final Image PLAYER_IMG = new Image("frog_idle.png"); // a supp une fois que l'animation fonctionne
-	public static final Image PLAYER_IDLE = new Image("frog_idle_anim.png");
+	public static final Image PLAYER_IMG = new Image("frog_idle.png");
 	
 	public static final Image ENEMY_IDLE_IMG = new Image("enemy_idle.png");
 	
